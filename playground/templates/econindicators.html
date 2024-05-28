@@ -1,0 +1,122 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Econ Surge - Economic Indicators</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+		<link rel="stylesheet" href="{% static 'assets/css/main'%}.css" />
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript'%}.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="{% url 'main' %}" class="logo">
+									<span class="symbol"><img src="{% static 'images/logo.svg'%}" alt="" /></span><span class="title">Econ Surge</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="{% url 'main' %}">Home</a></li>
+							<li><a href="{% url 'underthehood' %}">Under the Hood</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Economic Indicator - {{ indicator }} </h1>
+							<canvas id="myChart"></canvas>						
+						</div>
+						<div class="half-width"	style="margin: 0 auto;">
+							<form method="post">
+								{% csrf_token %}
+								{{ economic_indicator_form.as_p }}
+								<button type="submit">Submit / Reset</button>
+							</form>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<section>
+								<h2>Get in touch</h2>
+								<form method="post" action="{% url 'econ_indicators_form' %}">
+									{% csrf_token %}
+							        <label for="id_sender_email">Your Email:</label><br>
+									<input type="email" id="id_sender_email" name="sender_email" required><br><br>
+
+									<label for="id_sender_subject">Subject:</label><br>
+									<input type="text" id="id_sender_subject" name="sender_subject" required><br><br>
+
+									<label for="id_sender_message">Message:</label><br>
+									<textarea id="id_sender_message" name="sender_message" rows="4" cols="50" required></textarea><br><br>
+									<button type="submit">Send</button>
+								</form>
+							</section>
+							<section>
+								<h2>Follow</h2>
+								<ul class="icons">
+									<li><a href="#" class="icon brands style2 fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="#" class="icon brands style2 fa-500px"><span class="label">500px</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
+									<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+			<script>
+				var chartData = JSON.parse('{{ chart_data|escapejs }}');
+				var label_value = '{{ label_value|escapejs }}';
+				let ctx = document.getElementById('myChart').getContext('2d');
+				var myChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						datasets: [{
+							label: label_value,
+							backgroundColor: 'rgba(255, 99, 132, 0.2)',
+							borderColor: 'rgba(255, 99, 132, 1)',
+							data: chartData, // Data from Django view
+							borderWidth: 1
+						}]
+					},
+				});
+			</script>
+			
+	</body>
+</html>

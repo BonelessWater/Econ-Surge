@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Econ Surge - Foreign Exchange</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+		<link rel="stylesheet" href="{% static 'assets/css/main'%}.css" />
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript'%}.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="{% url 'main' %}" class="logo">
+									<span class="symbol"><img src="{% static 'images/logo.webp'%}" alt="" /></span><span class="title">Econ Surge</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="{% url 'main' %}">Home</a></li>
+							<li><a href="{% url 'underthehood' %}">Under the Hood</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Foreign Exchange - {{ from_currency }} - {{ to_currency }} </h1>
+							<canvas id="myChart"></canvas>						
+						</div>
+						<div class="half-width"	style="margin: 0 auto;">
+							<form method="post">
+								{% csrf_token %}
+								{{ from_currency_form.as_p }}
+								{{ to_currency_form.as_p }}
+								<button type="submit">Submit / Reset</button>
+							</form>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<section>
+								<h2>Get in touch</h2>
+								<form method="post" action="#">
+									<div class="fields">
+										<div class="field half">
+											<input type="text" name="name" id="name" placeholder="Name" />
+										</div>
+										<div class="field half">
+											<input type="email" name="email" id="email" placeholder="Email" />
+										</div>
+										<div class="field">
+											<textarea name="message" id="message" placeholder="Message"></textarea>
+										</div>
+									</div>
+									<ul class="actions">
+										<li><input type="submit" value="Send" class="primary" /></li>
+									</ul>
+								</form>
+							</section>
+							<section>
+								<h2>Follow</h2>
+								<ul class="icons">
+									<!--<li><a href="https://www.instagram.com/dominick_dupuy" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>-->
+									<li><a href="https://github.com/BonelessWater" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="mailto:domdd305@gmail.com?body=Good%20afternoon," class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+			<script>
+				var chartData = JSON.parse('{{ chart_data|escapejs }}');
+				let ctx = document.getElementById('myChart').getContext('2d');
+				var myChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						datasets: [{
+							label: 'Exhange rate',
+							backgroundColor: 'rgba(255, 99, 132, 0.2)',
+							borderColor: 'rgba(255, 99, 132, 1)',
+							data: chartData, // Data from Django view
+							borderWidth: 1
+						}]
+					},
+				});
+			</script>
+			
+	</body>
+</html>

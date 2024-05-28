@@ -1,0 +1,104 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Overview</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main'%}.css" />
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript'%}.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="{% url 'main' %}" class="logo">
+									<span class="symbol"><img src="{% static 'images/logo.webp'%}" alt="" /></span><span class="title">Econ Surge</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="{% url 'main' %}">Home</a></li>
+							<li><a href="{% url 'underthehood' %}">Under the Hood</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Overview - {{ Name }} </h1>					
+                        <p>
+                            {{ Description }}
+                        </p>
+                        <p>Market Capitalization ${{MarketCapitalization}} </p>
+                        <p>Dividend Yield {{DividendYield}} </p>
+                        <p>Profit Margin {{ProfitMargin}}</p>
+                        </div>
+						<div class="half-width"	style="margin: 0 auto;">
+							<form method="post">
+								{% csrf_token %}
+								{{ symbol_form.as_p }}
+								<button type="submit">Submit / Reset</button>
+							</form>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<section>
+								<h2>Get in touch</h2>
+								<form method="post" action="{% url 'overview_form' %}">
+									{% csrf_token %}
+							        <label for="id_sender_email">Your Email:</label><br>
+									<input type="email" id="id_sender_email" name="sender_email" required><br><br>
+
+									<label for="id_sender_subject">Subject:</label><br>
+									<input type="text" id="id_sender_subject" name="sender_subject" required><br><br>
+
+									<label for="id_sender_message">Message:</label><br>
+									<textarea id="id_sender_message" name="sender_message" rows="4" cols="50" required></textarea><br><br>
+									<button type="submit">Send</button>
+								</form>
+							</section>
+							<section>
+								<h2>Follow</h2>
+                                <ul class="icons">
+									<!--<li><a href="https://www.instagram.com/dominick_dupuy" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>-->
+									<li><a href="https://github.com/BonelessWater" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="mailto:domdd305@gmail.com?body=Good%20afternoon," class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>   
+							</section>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+
+	</body>
+</html>

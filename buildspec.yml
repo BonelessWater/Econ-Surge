@@ -1,0 +1,27 @@
+version: 0.2
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - 'echo "frontend 1"'
+    build:
+      commands:
+        - 'echo "frontend 2"'
+backend:
+  phases:
+    install:
+      runtime-versions:
+        python: 3.8
+        nodejs: 14
+    phases:
+      preBuild:
+        commands:
+          - 'pip install virtualenv'
+          - 'virtualenv EconSurge-env'
+      build:
+        commands:
+          - 'pip install -r requirements.txt'
+      postBuild:
+        commands:
+          - 'python manage.py runserver'

@@ -1,0 +1,105 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Econ Surge - Under the Hood</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{% static 'assets/css/main'%}.css" />
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript'%}.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="{% url 'main' %}" class="logo">
+									<span class="symbol"><img src="{% static 'images/logo.webp'%}" alt="" /></span><span class="title">Econ Surge</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="{% url 'main' %}">Home</a></li>
+							<li><a href="{% url 'underthehood' %}">Under the Hood</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Under the Hood</h1>
+							<span class="image main"><img src="{% static 'images/pic13.jpg'%}" alt="" /></span>
+							<p>This part of the website is dedicated to those who want to understand how Econ Surge obtains its information and how it is handled. If you care about programming or you don't mind learning, I encourage you to read this short passage:</p>
+							<p>
+								This page conducts regular API requests to Alpha Vantage whenever needed. Once data is pulled from Alpha Vantage, it is reformated, exported to a SQL database, 
+								then it is finally pulled from the database and shown to the consumer. By treating data in this way, we incur a small punishment in data processing in exchange for 
+								future returns in efficiency. By using this method, not only can we prevent unnecessary API calls (which prove time-consuming by themselves), but we can also streamline the distance between
+								information and the consumer and benefit from a 97.6% decrease in data handling time.
+							</p>
+							<p>
+								The backend of the website is mostly handled by Django's framework, which prevents unauthorized tinkering with protection against HTML and SQL injections thanks to its CSRF token 
+								functionality and text filtering. The frontend is of course HTML, CSS and Javascript with the help of SCSS scripts. Interestingly however, the graphs that are displayed throughout this website
+								can be acredited to <a href='https://www.chartjs.org'>Chart.js</a> and their wonderful work.
+							</p>
+						</div>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<section>
+								<h2>Get in touch</h2>
+								<form method="post" action="{% url 'underthehood' %}">
+									{% csrf_token %}
+							        <label for="id_sender_email">Your Email:</label><br>
+									<input type="email" id="id_sender_email" name="sender_email" required><br><br>
+
+									<label for="id_sender_subject">Subject:</label><br>
+									<input type="text" id="id_sender_subject" name="sender_subject" required><br><br>
+
+									<label for="id_sender_message">Message:</label><br>
+									<textarea id="id_sender_message" name="sender_message" rows="4" cols="50" required></textarea><br><br>
+									<button type="submit">Send</button>
+								</form>
+							</section>
+							</section>
+							<section>
+								<h2>Follow</h2>
+								<ul class="icons">
+									<!--<li><a href="https://www.instagram.com/dominick_dupuy" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>-->
+									<li><a href="https://github.com/BonelessWater" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="mailto:domdd305@gmail.com?body=Good%20afternoon," class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+								</ul>
+							</section>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/browser.min.js' %}"></script>
+			<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+
+	</body>
+</html>

@@ -1,0 +1,12 @@
+version: 1
+frontend:
+    phases:
+        build:
+            commands:
+                - 'echo "frontend deployment"'
+    artifacts:
+        baseDirectory: /
+        files:
+            - '**/*'
+    cache:
+        paths: []
